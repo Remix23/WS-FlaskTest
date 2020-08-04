@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Data</title>
+<link rel="icon" href="{{ url_for('static', filename='Photos/icons/refresh.svg') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var dataFromFlask = []
+    '{% for line in data %}'
+        dataFromFlask.push({
+            'Id': '{{ line.id }}', 
+            'From': '{{ line.from_station }}', 
+            'Temperature': '{{ line.temp }}', 
+            'Presure': '{{ line.pres }}', 
+            'Humidity': '{{ line.hum }}', 
+            'batV': '{{ line.batV }}', 
+            'RSSI': '{{ line.RSSI }}', 
+            'Received': '{{ line.date_received.strftime("%m.%d.%Y %H:%M:%S") }}', 
+            'Added': '{{ line.date_added }}', 
+        })
+    '{% endfor %}'
+</script>
+{% endblock %}
+
+
+{% block body %}
+<div class="content">
+    <h2 style="text-align: center;">See your data here</h2>
+    <h4 style="text-align: center;"><a href="{{ url_for('home_page') }}">Click to came back</a></h4>
+    <div class="data">
+        <div class="table">
+            <table>
+                <tr>
+                    <th>From</th>
+                    <th>Received</th>
+                    <th>Temperature [*C]</th>
+                    <th>Presure [hPa]</th>
+                    <th>Humidity [%]</th>
+                    <th>Battery Voltage [V]</th>
+                    <th>RSSI [dB]</th>
+                </tr>
+                {% for line in data %}
+                <tr>
+                    <td>{{ line.from_station }}</td>
+                    <td>{{ line.date_received.strftime("%m.%d.%Y %H:%M:%S") }}</td>
+                    <td>{{ line.temp }}</td>
+                    <td>{{ line.pres }}</td>
+                    <td>{{ line.hum }}</td>
+                    <td>{{ line.batV }}</td>
+                    <td>{{ line.RSSI }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="chart">
+            <canvas id="mychart" width="800" height="500"></canvas>
+            <div class="by">
+                <h4>Chart for: <span id="chart-by">temperature</span></h4>
+                <button id="Temperature" onclick="chartBy(this)">Chart for temperature</button>
+                <button id="Presure" onclick="chartBy(this)">Chart for presure</button>
+                <button id="Humidity" onclick="chartBy(this)">Chart for humidity</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/dataPlot.js') }}"></script>
+</div>
+{% endblock %}

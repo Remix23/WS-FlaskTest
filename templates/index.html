@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Home Page</title>
+<link rel="icon" href="{{ url_for('static', filename='Photos/icons/home_icon-icons.com_73532.ico') }}">
+{% endblock %}
+
+
+{% block body %}
+
+<form action="/" method="POST">
+    <input type="text" name="from" id="from">
+    <input type="text" name="temp" id="temp">
+    <input type="text" name="pres" id="pres">
+    <input type="text" name="hum" id="hum">
+    <input type="text" name="batV" id="batV">
+    <input type="text" name="RSSI" id="RSSI">
+    <input type="text" name="date_received" id="date_received">
+    <input type="submit" value='Add Mes'>
+</form>
+<h4><a href="{{ url_for('data') }}">Click to see data</a></h4>
+{% endblock %}
