@@ -1,7 +1,6 @@
 from flask import Flask, url_for, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from models import *
 import json
 
 
@@ -10,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
 db = SQLAlchemy(app)
 
-
+from models import *
 
 @app.route('/', methods=['POST', 'GET'])
 def home_page ():
